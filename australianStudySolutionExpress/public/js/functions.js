@@ -4,7 +4,8 @@
 
 var currentState={
     filter:'name',
-    id:null
+    id:null,
+    secret:null
 };
 
 //var BASEURL='alexmac.au.ibm.com';
@@ -16,7 +17,7 @@ var databaseCall=function(){
     var query=$('#searchBox').val();
 
 
-    $.get( baseurl+currentState.filter, { item: query },function(data){
+    $.get( baseurl+currentState.filter, { item: query ,secret:currentState.secret},function(data){
         if(data.length==0){
 
             $('#messageDiv').html('No record found');
@@ -55,7 +56,8 @@ var addUser=function(){
 var deleteUser=function(){
     //alert('deleting')
     var payload={
-        id:currentState.id
+        id:currentState.id,
+        secret:currentState.secret
 
     }
 
@@ -247,6 +249,33 @@ var chooseFilter=function(filter){
 
 $( document ).ready(function() {
     disableEditing();
+    $('#loginButton').bind('click',function(){
+        event.preventDefault();
+        var username=$('#userLogin').val();
+        var password=$('#passwordLogin').val();
+        alert('login :'+username+' '+password);
+        var data={
+            username:username,
+            password:password
+        }
+        $.ajax({
+            url: '/login/',
+            type: 'GET',
+            data: data,
+            success: function(result,xhr){
+                currentState.secret=result;
+                $('#loginView').hide();
+                $('#mainBody').css('display','inline')
+
+
+            }
+
+        });
+
+
+
+    });
+
 
 });
 

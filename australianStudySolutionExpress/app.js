@@ -80,6 +80,9 @@ app.put('/students',students.updateStudent);
 app.delete('/students',students.deleteStudent);
 
 
+/// LOGIN
+app.get('/login/', students.login);
+
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

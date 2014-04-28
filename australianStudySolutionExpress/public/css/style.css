@@ -1,11 +1,15 @@
 body {
     padding-top: 50px;
 }
+#mainBody{
+    display: none;
+}
 .starter-template {
     padding: 40px 15px;
     text-align: center;
 }
 
+.modal-footer {   border-top: 0px; }
 
 .cont{
 

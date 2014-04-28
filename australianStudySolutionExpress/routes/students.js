@@ -6,103 +6,171 @@
 var mongo = require('mongodb');
 var monk = require('monk');
 var db = monk('localhost:27017/australiaStudySolutionsDB');
+var secret='s3cr3t';
+
+exports.login = function(req, res){
+
+    var username=req.query.username;
+    var password=req.query.password;
+    res.statusCode=401;
+    if(username&&password){
+        console.log('[USER] - Attempting login by '+username);
+
+        var collection = db.get('users');
+
+
+        collection.find({name:username},{},function(e,docs){
+            console.log(docs);
+            if(docs.length>0){
+                if(docs[0].password==password){
+                    res.statusCode = 200;
+                    res.send(secret);
+
+
+                }else{
+                    res.send('User not found');
+
+                }
+
+            }
+
+            //console.log(docs);
+            //docs=JSON(docs);
+            //res.send('User not found');
+
+
+        });
+
+
+    }else{
+        res.send('Please provide credentials');
+
+    }
+
+
+
+
+}
+
 
 
 
 exports.getStudentsById = function(req, res){
-    console.log('calling by id');
-    var id=parseInt(req.query.id);
-    var collection = db.get('students');
-    collection.find({id:id},{},function(e,docs){
-       //console.log(docs);
-        //docs=JSON(docs);
-        res.send('Found some shit',docs);
+    var clientSecret=req.query.secret;
+    if(clientSecret==secret){
+        console.log('calling by id');
+        var id=parseInt(req.query.id);
+        var collection = db.get('students');
+        collection.find({id:id},{},function(e,docs){
+            //console.log(docs);
+            //docs=JSON(docs);
+            res.send('Found some shit',docs);
 
-    });
+        });
+
+    }
+
 
 };
 
 exports.updateStudent = function(req, res){
 
-    console.log('calling by id');
 
-    var collection = db.get('students');
-    collection.update({_id:req.body.id}, req.body.item,
-    function(){
-        res.send('RECORD UPODATED');
-    });
+        console.log('calling by id');
+
+        var collection = db.get('students');
+        collection.update({_id: req.body.id}, req.body.item,
+            function () {
+                res.send('RECORD UPODATED');
+            });
 
 
 };
 
 exports.deleteStudent = function(req, res){
+    var clientSecret=req.body.secret;
+    if(clientSecret==secret) {
 
-    console.log('deleting by id');
+        console.log('deleting by id');
 
-    var collection = db.get('students');
-    collection.remove({_id:req.body.id},
-        function(){
-            res.send('RECORD DELETED');
-        });
+        var collection = db.get('students');
+        collection.remove({_id: req.body.id},
+            function () {
+                res.send('RECORD DELETED');
+            });
+    }else{
+        console.log('no secret');
+    }
 
 
 };
 
 
 exports.getStudentsByName = function(req, res){
-    console.log('calling by name');
-    var item=req.query.item
-    console.log(item);
-    var collection = db.get('students');
-    collection.find({name: { $regex: ".*"+item+".*"}},{},function(e,docs){
-        console.log(docs);
-        //docs=JSON(docs);
-        res.send('Found some shit',docs);
+    var clientSecret=req.query.secret;
+    if(clientSecret==secret) {
+        console.log('calling by name');
+        var item = req.query.item
+        console.log(item);
+        var collection = db.get('students');
+        collection.find({name: { $regex: ".*" + item + ".*"}}, {}, function (e, docs) {
+            console.log(docs);
+            //docs=JSON(docs);
+            res.send('Found some shit', docs);
 
-    });
+        });
+    }
 
 };
 
 exports.getStudentsByLastName = function(req, res){
-    console.log('calling by name');
-    var item=req.query.item;
-    //console.log(name);
-    var collection = db.get('students');
-    collection.find({lastName: { $regex: ".*"+item+".*"}},{},function(e,docs){
-        //console.log(docs);
-        //docs=JSON(docs);
-        res.send('Found some shit',docs);
+    var clientSecret=req.query.secret;
+    if(clientSecret==secret) {
+        console.log('calling by name');
+        var item = req.query.item;
+        //console.log(name);
+        var collection = db.get('students');
+        collection.find({lastName: { $regex: ".*" + item + ".*"}}, {}, function (e, docs) {
+            //console.log(docs);
+            //docs=JSON(docs);
+            res.send('Found some shit', docs);
 
-    });
+        });
+    }
 
 };
 
 exports.getStudentsByPhone = function(req, res){
-    console.log('calling by phone');
-    var item=req.query.item;
-    item=parseInt(item);
-    console.log(item);
-    var collection = db.get('students');
-    collection.find({mobile:item},{},function(e,docs){
-        //console.log(docs);
-        //docs=JSON(docs);
-        res.send('Found some shit',docs);
+    var clientSecret=req.query.secret;
+    if(clientSecret==secret) {
+        console.log('calling by phone');
+        var item = req.query.item;
+        item = parseInt(item);
+        console.log(item);
+        var collection = db.get('students');
+        collection.find({mobile: item}, {}, function (e, docs) {
+            //console.log(docs);
+            //docs=JSON(docs);
+            res.send('Found some shit', docs);
 
-    });
-
+        });
+    }
 };
 
 
 
 
 exports.studentslist = function(req, res) {
+    var clientSecret=req.query.secret;
+    if(clientSecret==secret) {
         var collection = db.get('students');
-        collection.find({},{},function(e,docs){
-          //  console.log(docs);
-          //  docs=JSON(docs);
-            res.send('Found some shit',docs);
+        collection.find({}, {}, function (e, docs) {
+            //  console.log(docs);
+            //  docs=JSON(docs);
+            res.send('Found some shit', docs);
 
         });
+    }
 
 };
 

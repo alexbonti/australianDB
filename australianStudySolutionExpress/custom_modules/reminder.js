@@ -7,13 +7,13 @@ module.exports = function() {
     var smtpTransport = nodemailer.createTransport("SMTP",{
         service: "Gmail",
         auth: {
-            user: "alexbonti83@gmail.com",
-            pass: "aletotti"
+            user: "australianssdb@gmail.com",
+            pass: "australia2014"
         }
     });
 
     var mailOptions = {
-        from: "Alessio Bonti ✔ <alexbonti83@gmail.com>", // sender address
+        from: "AustralianSS_DB ✔ <australianssdb@gmail.com>", // sender address
         to: "alexbonti83@hotmail.com", // list of receivers
         subject: "Australian Study Solutions DB Reminder ✔", // Subject line
         text: "Hello world ✔", // plaintext body
@@ -41,22 +41,22 @@ module.exports = function() {
 
             var id = setInterval(function() {
                 var dt = new Date();
-                var month = parseInt(dt.getUTCMonth())+1;
-                month='0'+month;
+                var month = parseInt(dt.getUTCMonth()) + 1;
+                month = '0' + month;
                 var day = dt.getUTCDate();
                 var year = dt.getUTCFullYear();
                 var newdate = year + "-" + month + "-" + day;
-                if(todayDate!=newdate){
-                    console.log('IS A NEW DAY');
-                    todayDate=newdate;
+                if (todayDate != newdate) {
+                    //console.log('IS A NEW DAY');
+                    todayDate = newdate;
                     self.startChecking();
 
-                }else{
-                    console.log('is not a  new day');
+                } else {
+                    //console.log('is not a  new day');
                 }
 
-
-            }, 10000000);
+            },10000);
+            //}, 30000000);
 
         },
 
@@ -78,7 +78,14 @@ module.exports = function() {
             collection.find({reminder:newdate},{},function(e,docs){
                 //console.log(docs);
                 //docs=JSON(docs);
-                self.sendEmail(docs);
+                if(docs.length>0){
+                    console.log('[REMINDER] - some reminders found');
+                    self.sendEmail(docs);
+
+                }else{
+                    console.log('[REMINDER] - no reminders today');
+                }
+
 
 
 
@@ -88,13 +95,13 @@ module.exports = function() {
         },
 
         sendEmail:function(content){
-            var text='<b>The following have a reminder today : ';
+            var text='<b>The following have a reminder today : </b>';
             content.forEach(function(item){
-                text=text+' '+item.name+' '+item.lastName+','
-            })
-            text=text+'</b>';
+                text=text+'<br> '+item.name+' '+item.lastName+'<br>Notes'+item.note+'<br>'
+            });
+
             mailOptions.html=text;
-            mailOptions.text=text;
+            mailOptions.text='New Reminder';
             smtpTransport.sendMail(mailOptions, function(error, response){
                 if(error){
                     console.log(error);
