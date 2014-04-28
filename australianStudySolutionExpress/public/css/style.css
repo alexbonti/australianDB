@@ -1,0 +1,136 @@
+body {
+    padding-top: 50px;
+}
+.starter-template {
+    padding: 40px 15px;
+    text-align: center;
+}
+
+
+.cont{
+
+}
+
+#resultsDiv{
+    padding-top: 4px;
+    height: 500px;
+
+}
+
+#colDiv{
+    height: 520px;
+}
+
+#filtersDiv{
+    margin-top: 4px;
+    height: 27px;
+}
+
+#resultsListDiv{
+    height: 400px;
+    overflow: auto;
+}
+
+.resultsForm{
+    width: 90%;
+}
+.resultsForm label{
+    width: 80px !important;
+}
+
+.resultsForm input{
+    display: inline;
+    width: 427px;
+}
+
+.resultsForm select{
+    display: inline;
+    width: 150px;
+
+}
+
+#expVisaLabel{
+    width: 38px !important;
+    margin-left: 4px;
+}
+
+#expVisa{
+    width: 226px !important;
+
+}
+#dob{
+    width: 170px !important;
+
+}
+#telephone{
+     width: 170px !important;
+
+
+ }
+#telephoneLabel{
+    width: 76px !important;
+    margin-left: 4px;
+
+}
+
+#referralTypeLabel{
+
+}
+
+#referralTypeInput{
+    width: 170px !important;
+
+}
+#referralNameLabel{
+    width: 76px !important;
+    margin-left: 4px;
+}
+
+#referralNameInput{
+    width: 170px !important;
+
+}
+
+#reminderDate{
+    width: 170px !important;
+
+}
+
+#nameInput{
+    width: 170px !important;
+}
+
+#lastNameInput{
+    width: 170px !important;
+}
+#buttonFilters{
+    width: 100%;
+
+    margin-top: 5px;
+}
+#buttonFilters .btn{
+    width: 81px;
+}
+
+#messageDiv{
+    text-align: center;
+    border-radius: 10px;
+    border: 1px solid black;
+    width: 98%;
+    margin-left: 2px;
+    margin-top: 5px;
+}
+
+.container {
+    width: 970px;
+    max-width: none !important;
+}
+
+#notes{
+    width: 507px !important;
+
+}
+
+#searchDiv{
+    margin-top: 4px;
+}
